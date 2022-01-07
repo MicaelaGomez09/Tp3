@@ -37,6 +37,28 @@ de cada película, a continuación se muestra un bloque y en color rojo lo que s
 según la pelicula.   
 
 
+<!-- Repetir esto para cada pelicula -->
+<article class='col-md-4 article-intro'>
+<a href='#'>
+<img class='img-responsive img-rounded' src='http://ia.mediaimdb.
+com/images/M/MV5BMjA5NTYzMDMyM15BMl5BanBnXkFtZTgwNjU3NDU2MTE@._V1_UX182_CR0,0,182,268_AL_.jpg'
+alt=''>
+</a>
+<h3>
+<a href='#'>Back to the future</a>
+</h3>
+<ul>
+<li>Género:Aventura</li>
+<li>Puntaje:86</li>
+<li>Duración:116</li>
+</ul>
+<p>A young man is accidentally sent thirty years into the past in a time-traveling
+DeLorean invented by his friend, Dr. Emmett Brown, and must make sure his high-school-age parents
+unite in order to save his own existence.</p>
+</article>
+<!-- Repetir esto para cada pelicula →
+
+
  Ayuda: Se puede dividir el archivo index.html en dos, con el texto que debe ir antes de los
 bloques “article” y el texto que debe irdespués, de modo de leer estos archivos y copiar el
 contenido en el archivo html que se debe generar. Intercalando los bloques “article” con los
