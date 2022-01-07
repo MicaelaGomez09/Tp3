@@ -36,7 +36,7 @@ repetir para cada película, dentro de este bloque, se debe cargar ciertas parte
 de cada película, a continuación se muestra un bloque y en color rojo lo que se debe variar
 según la pelicula.   
 
-
+/*
 <!-- Repetir esto para cada pelicula -->
 <article class='col-md-4 article-intro'>
 <a href='#'>
@@ -57,7 +57,7 @@ DeLorean invented by his friend, Dr. Emmett Brown, and must make sure his high-s
 unite in order to save his own existence.</p>
 </article>
 <!-- Repetir esto para cada pelicula →
-
+*/
 
  Ayuda: Se puede dividir el archivo index.html en dos, con el texto que debe ir antes de los
 bloques “article” y el texto que debe irdespués, de modo de leer estos archivos y copiar el
