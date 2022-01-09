@@ -10,7 +10,9 @@ struct Movie
     int puntaje;
     char linkImagen[50];
     int estado; /* Active (1) Inactivo(0) */
-}m;
+};
+
+struct Movie* m;
 
 void getString(char mensaje[], char input[]);
 int getInt(char mensaje[]);

@@ -75,11 +75,11 @@ int esSoloLetras(char str[])
  */
 void loadDatos(struct Movie* m)
 {
-  getString("Ingrese el nombre: ", m -> titulo);
-  getString("Ingrese el apellido: ", m -> genero);
-  m ->duracion = getInt("Ingrese una duracion: ");
+  getString("Ingrese el titulo: ", m -> titulo);
+  getString("Ingrese el genero: ", m -> genero);
+  m -> duracion = getInt("Ingrese una duracion: ");
   getString("Ingrese una descripcion: ", m -> descripcion);
-  getInt("Ingrese un puntaje: ");
+  m -> puntaje = getInt("Ingrese un puntaje: ");
 }
 
 /** Guarda una struct al final de un archivo binario.dat
@@ -88,6 +88,8 @@ void loadDatos(struct Movie* m)
  */
 int saveMovie(struct Movie* m) //recibe el puntero a estructura
 {
+    int cant;
+
     FILE* fm; //defino una variable para el puntero del archivo
     fm = fopen("bin.dat","ab+"); //append binario. ab: es para q sea binario, el + crea el archivo si no existe
 
@@ -97,9 +99,27 @@ int saveMovie(struct Movie* m) //recibe el puntero a estructura
         return 0;
     }
     //fwrite hay q pasarle: el puntero, el tamaño del bloque que queremos escribir, la cantidad de bloques a escribir y el puntero donde vamos a escribir.
-    fwrite(m, sizeof(struct Movie),1,fm); //para escribir la estructura al final del archivo
+    cant = fwrite(m, sizeof(struct Movie), 1, fm); //para escribir la estructura al final del archivo
+
+    if(cant < 1)
+    {
+        printf("\nError al escribir el archivo");
+        else
+        printf("\nSe escribieron %d caracteres", 1);
+        fclose(parch);
+    }
 
     fclose(fm);//cierra el file
+
+    /*
+    cant=fwrite ( texto , sizeof ( char ) , longi , parch ); //Se escribe al archivo
+    if (cant<longi)
+    printf("\nError al escribir el archivo");
+    else
+    printf("\nSe escribieron %d caracteres", cant);
+    fclose(parch);
+    */
+
     return 1;
 }
 
@@ -121,7 +141,7 @@ struct Movie* readMovie(char* titulo)
     struct Movie* mRet = malloc(sizeof(struct Movie)); //en mRet guardamos el tamaño q representaesa estructura
     int flagEncontrado = 0;
 
-    //freadfunciona con: puntero donde guardaremos los datos leidos, la cantidad de dytes del bloque q vamos a leer, cantidad de bloques q lee a la vez y el puntero al archivo.
+    //freadfunciona con: puntero donde guardaremos los datos leidos, la cantidad de bytes del bloque q vamos a leer, cantidad de bloques q lee a la vez y el puntero al archivo.
     while(fread(mRet,sizeof(struct Movie),1,fm) != 0) //mientras se haya leido un bloque dará distinto de cero, entonces entra al while
     {
         if(strcmp(titulo, mRet -> titulo) == 0) //pregunta si el campo titulo es igual al la cad de char titulo q recibimos como argumento

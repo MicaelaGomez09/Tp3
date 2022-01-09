@@ -3,6 +3,8 @@
 #include <string.h>
 #include "libreria_movie.h"
 
+
+//
 int main()
 {
     char seguir='s';
@@ -16,8 +18,8 @@ int main()
         printf("1- Agregar pelicula\n");
         printf("2- Borrar pelicula\n");
         printf("3- Modificar pelicula\n");
-        printf("3- Buscar pelicula\n");
-        printf("3- Generar link\n");
+        printf("4- Buscar pelicula\n");
+        printf("5- Generar link\n");
         printf("6- Salir\n");
 
         scanf("%d",&opcion);
@@ -27,9 +29,9 @@ int main()
             case 1: //AGREGAR
                 while(out == "ok")
                 {
-                  loadDatos(&m);
-                  saveMovie(&m);
-                  out = getChar("Ingresar una pelicula? ok/no ");
+                  loadDatos(m);
+                  saveMovie(m);
+                  out = getChar("Ingresar una pelicula nueva? ok/no ");
                 }
                 break;
             case 2: //BORRAR
@@ -37,7 +39,7 @@ int main()
             case 3: //MODIFICAR
                break;
             case 4: //BUSCAR
-
+                /*
                 getString("Ingrese un titulo a buscar en el archivo: ", peliculaAEncontrar);//recibe lo q queremos buscar
 
                 struct Movie* mEncontrada = readMovie(peliculaAEncontrar); //luego llamo a readMovie enviandole el titulo q buscamos. mEncontrada es la estructura de la pelicula encontrada
@@ -51,7 +53,7 @@ int main()
                   printf("El titulo ingresado no está en el archivo");
 
                 return 0;
-
+                */
                 break;
             case 5: //GENERA LINK
                 break;
