@@ -1,50 +1,22 @@
-#ifndef LIBRERIA_MOVIE_H_INCLUDED
-#define LIBRERIA_MOVIE_H_INCLUDED
+void printMenu();
+int getInt();
+float getFloat();
+char getChar();
 
-struct Movie
-{
-    char titulo[30];
-    char genero[30];
-    int duracion;
-    char descripcion[280];
-    int puntaje;
-    char linkImagen[50];
-    int estado; /* Active (1) Inactivo(0) */
-};
+char getNumeroAleatorio(int desde , int hasta, int iniciar);
 
-struct Movie* m;
+int esNumerico(char *str) ;
+int esTelefono(char *str);
+int esAlfaNumerico(char *str);
+int esSoloLetras(char *str);
+int esNumericoFlotante(char str[]);
 
-void getString(char mensaje[], char input[]);
-int getInt(char mensaje[]);
-int getChar(char mensaje[]);
+void getString(char mensaje[],char input[]);
+int getStringLetras(char mensaje[],char input[]);
+int getStringNumeros(char mensaje[],char input[]);
+int getStringNumerosFlotantes(char mensaje[],char input[]);
 
-void loadDatos(struct Movie* m);
-int saveMovie(struct Movie* m);
-struct Movie* readMovie(char* titulo);
+int getValidInt(char requestMessage[],char errorMessage[], int lowLimit, int hiLimit);
+void getValidString(char requestMessage[],char errorMessage[], char input[]);
 
-//void setStatus(Movie arrayProductos[], int arrayLongitud, int value);
-//int findEmptyPlace(Movie arrayProductos[], int arrayLongitud);
-//int findProductByCode(Movie arrayProductos[], int arrayLongitud, int code);
-char* getDinamicStr(char* msg);
-
-/**
- *  Agrega una pelicula al archivo binario
- *  @param movie la estructura a ser agregada al archivo
- *  @return retorna 1 o 0 de acuerdo a si pudo agregar la pelicula o no
- */
-//int agregarPelicula(EMovie movie);
-
-/**
- *  Borra una pelicula del archivo binario
- *  @param movie la estructura a ser eliminada al archivo
- *  @return retorna 1 o 0 de acuerdo a si pudo eliminar la pelicula o no
- */
-//int borrarPelicula(EMovie movie);
-
-/**
- *  Genera un archivo html a partir de las peliculas cargadas en el archivo binario.
- *  @param lista la lista de peliculas a ser agregadas en el archivo.
- *  @param nombre el nombre para el archivo.
- */
-//void generarPagina(EMovie lista[], char nombre[]);
-#endif // LIBRERIA_MOVIE_H_INCLUDED
+void cleanStdin(void);
