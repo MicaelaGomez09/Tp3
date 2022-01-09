@@ -1,233 +1,330 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <string.h>
-#include "libreria_movie.h"
 
-void getString(char mensaje[], char input[])
+
+/**
+ * \brief Solicita un número al usuario y devuelve el resultado
+ * \param mensaje Es el mensaje a ser mostrado
+ * \return El número ingresado por el usuario
+ *
+ */
+float getFloat(char* mensaje)
 {
-  printf("%s", mensaje);
-  scanf("%s", input);
+    float auxiliar;
+    printf("%s",mensaje);
+    scanf("%f",&auxiliar);
+    return auxiliar;
 }
-int getInt(char mensaje[])
+
+
+/**
+ * \brief Solicita un número al usuario y devuelve el resultado
+ * \param mensaje Es el mensaje a ser mostrado
+ * \return El número ingresado por el usuario
+ *
+ */
+int getInt(char* mensaje)
 {
-    int aux; //variable int que contendr� el valor de mensaje
-    printf("%s", mensaje);//solicita un string
-    scanf("%d", &aux);//toma el string y lo guarda tido %d en la variable
-    return aux;// retorna la variable con el dato guardado
+    int auxiliar;
+    printf("%s",mensaje);
+    scanf("%d",&auxiliar);
+    return auxiliar;
 }
-int getChar(char mensaje[])
+
+
+/**
+ * \brief Solicita un caracter al usuario y devuelve el resultado
+ * \param mensaje Es el mensaje a ser mostrado
+ * \return El caracter ingresado por el usuario
+ *
+ */
+char getChar(char* mensaje)
 {
-    float aux; //variable flotante que contendr� el valor de mensaje
-    printf("%s", mensaje);//solicita un string
-    fflush(stdin); // el estandar input puede contener algun residuo
-    scanf("%c", &aux);//toma el string y lo guarda en la variable
-    return aux;// retorna la variable con el dato guardado
+    char auxiliar;
+    printf("%s",mensaje);
+    fflush(stdin);
+    scanf("%c",&auxiliar);
+    return auxiliar;
 }
-int getSoloLetras(char mensaje[], char input[])
+/**
+ * \brief Genera un número aleatorio
+ * \param desde Número aleatorio mínimo
+ * \param hasta Número aleatorio máximo
+ * \param iniciar Indica si se trata del primer número solicitado 1 indica que si
+ * \return retorna el número aleatorio generado
+ *
+ */
+char getNumeroAleatorio(int desde , int hasta, int iniciar)
 {
-  char datoIngresado[256];
-  getString(mensaje, datoIngresado);//(placeholder, &duardado_en) /**/
-  if(esSoloLetras(datoIngresado)) //si lo que ingresó el usuario son solo letras
-  {
-    strcpy(input, datoIngresado);//copiamos el dato ingresado en 'inpu'
-    return 1;
-  }
-  return 0;
+    if(iniciar)
+        srand (time(NULL));
+    return desde + (rand() % (hasta + 1 - desde)) ;
 }
-int getSoloNumeros(char mensaje[], char input[])
+
+
+/**
+ * \brief Verifica si el valor recibido es numérico aceptando flotantes
+ * \param str Array con la cadena a ser analizada
+ * \return 1 si es númerico y 0 si no lo es
+ *
+ */
+
+int esNumericoFlotante(char str[])
+{
+   int i=0;
+   int cantidadPuntos=0;
+   while(str[i] != '\0')
+   {
+       if (str[i] == '.' && cantidadPuntos == 0)
+       {
+           cantidadPuntos++;
+           i++;
+           continue;
+
+       }
+       if(str[i] < '0' || str[i] > '9')
+           return 0;
+       i++;
+   }
+   return 1;
+}
+
+/**
+ * \brief Verifica si el valor recibido es numérico
+ * \param str Array con la cadena a ser analizada
+ * \return 1 si es númerico y 0 si no lo es
+ *
+ */
+
+int esNumerico(char str[])
+{
+   int i=0;
+   while(str[i] != '\0')
+   {
+       if(str[i] < '0' || str[i] > '9')
+           return 0;
+       i++;
+   }
+   return 1;
+}
+
+/**
+ * \brief Verifica si el valor recibido contiene solo letras
+ * \param str Array con la cadena a ser analizada
+ * \return 1 si contiene solo ' ' y letras y 0 si no lo es
+ *
+ */
+int esSoloLetras(char str[])
+{
+   int i=0;
+   while(str[i] != '\0')
+   {
+       if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
+           return 0;
+       i++;
+   }
+   return 1;
+}
+
+
+/**
+ * \brief Verifica si el valor recibido contiene solo letras y números
+ * \param str Array con la cadena a ser analizada
+ * \return 1 si contiene solo espacio o letras y números, y 0 si no lo es
+ *
+ */
+int esAlfaNumerico(char str[])
+{
+   int i=0;
+   while(str[i] != '\0')
+   {
+       if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z') && (str[i] < '0' || str[i] > '9'))
+           return 0;
+       i++;
+   }
+   return 1;
+}
+
+
+/**
+ * \brief Verifica si el valor recibido contiene solo números, + y -
+ * \param str Array con la cadena a ser analizada
+ * \return 1 si contiene solo numeros, espacios y un guion.
+ *
+ */
+int esTelefono(char str[])
+{
+   int i=0;
+   int contadorGuiones=0;
+   while(str[i] != '\0')
+   {
+       if((str[i] != ' ') && (str[i] != '-') && (str[i] < '0' || str[i] > '9'))
+           return 0;
+       if(str[i] == '-')
+            contadorGuiones++;
+       i++;
+   }
+   if(contadorGuiones==1) // debe tener un guion
+        return 1;
+
+    return 0;
+}
+
+/**
+ * \brief Solicita un texto al usuario y lo devuelve
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param input Array donde se cargará el texto ingresado
+ * \return void
+ */
+void getString(char mensaje[],char input[])
+{
+    printf("%s",mensaje);
+    scanf ("%s", input);
+}
+
+/**
+ * \brief Solicita un texto al usuario y lo devuelve
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param input Array donde se cargará el texto ingresado
+ * \return 1 si el texto contiene solo letras
+ */
+int getStringLetras(char mensaje[],char input[])
 {
     char aux[256];
-    getString(mensaje, aux);
-    if(esNumerico(aux))
+    getString(mensaje,aux);
+    if(esSoloLetras(aux))
     {
-        strcpy(input, aux);
+        strcpy(input,aux);
         return 1;
     }
     return 0;
 }
-//subfunciones de getSoloNumeros y getSoloLetras
-int esNumerico(char str[])
+
+/**
+ * \brief Solicita un texto numérico al usuario y lo devuelve
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param input Array donde se cargará el texto ingresado
+ * \return 1 si el texto contiene solo números
+ */
+int getStringNumeros(char mensaje[],char input[])
 {
-    int i = 0;
-    while(str[i] != '\0')
+    char aux[256];
+    getString(mensaje,aux);
+    if(esNumerico(aux))
     {
-        if(str[i] < '0' || str[i] > '9')
-            return 0;
-        i++;
+        strcpy(input,aux);
+        return 1;
     }
-    return 1;
-}
-int esSoloLetras(char str[])
-{
-    int i=0;
-    while(str[i] != '\0')
-    {
-        if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
-            return 0;
-        i++;
-    }
-    return 1;
+    return 0;
 }
 
-/** Pide los datos y los guarda en la struct
+
+/**
+ * \brief Solicita un texto numérico al usuario y lo devuelve (acepta flotantes)
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param input Array donde se cargará el texto ingresado
+ * \return 1 si el texto contiene solo números
+ */
+int getStringNumerosFlotantes(char mensaje[],char input[])
+{
+    char aux[256];
+    getString(mensaje,aux);
+    if(esNumericoFlotante(aux))
+    {
+        strcpy(input,aux);
+        return 1;
+    }
+    return 0;
+}
+
+
+/**
+ * \brief Solicita un numero entero al usuario y lo valida
+ * \param requestMessage Es el mensaje a ser mostrado para solicitar el dato
+ * \param requestMessage Es el mensaje a ser mostrado en caso de error
+ * \return El número ingresado por el usuario
  *
+ */
+int getValidInt(char requestMessage[],char errorMessage[], int lowLimit, int hiLimit)
+{
+    char auxStr[256];
+    int auxInt;
+    while(1)
+    {
+        if (!getStringNumeros(requestMessage,auxStr))
+        {
+            printf ("%s\n",errorMessage);
+            continue;
+
+        }
+        auxInt = atoi(auxStr);
+        if(auxInt < lowLimit || auxInt > hiLimit)
+        {
+            printf ("El numero del debe ser mayor a %d y menor a %d\n",lowLimit,hiLimit);
+            continue;
+
+        }
+        return auxInt;
+
+    }
+
+
+}
+
+/**
+ * \brief Limpia el stdin, similar a fflush
+ * \param -
+ * \return -
  *
  */
-void loadDatos(struct Movie* m)
+void cleanStdin(void)
 {
-  getString("Ingrese el titulo: ", m -> titulo);
-  getString("Ingrese el genero: ", m -> genero);
-  m -> duracion = getInt("Ingrese una duracion: ");
-  getString("Ingrese una descripcion: ", m -> descripcion);
-  m -> puntaje = getInt("Ingrese un puntaje: ");
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
 }
 
-/** Guarda una struct al final de un archivo binario.dat
- * \param struct Movie* m puntero a struct a ser escrita
- * \return 0:error, 1:OK
+/**
+ * \brief Solicita un string
+ * \param requestMessage Es el mensaje a ser mostrado para solicitar el dato
+ * \param requestMessage Es el mensaje a ser mostrado en caso de error
+ * \param input Array donde se cargará el texto ingresado
+ * \return -
+ *
  */
-int saveMovie(struct Movie* m) //recibe el puntero a estructura
+void getValidString(char requestMessage[],char errorMessage[], char input[])
 {
-    int cant;
 
-    FILE* fm; //defino una variable para el puntero del archivo
-    fm = fopen("bin.dat","ab+"); //append binario. ab: es para q sea binario, el + crea el archivo si no existe
-
-    if(fp==NULL)
+    while(1)
     {
-        printf("Error opening archivo");
-        return 0;
-    }
-    //fwrite hay q pasarle: el puntero, el tamaño del bloque que queremos escribir, la cantidad de bloques a escribir y el puntero donde vamos a escribir.
-    cant = fwrite(m, sizeof(struct Movie), 1, fm); //para escribir la estructura al final del archivo
-
-    if(cant < 1)
-    {
-        printf("\nError al escribir el archivo");
-        else
-        printf("\nSe escribieron %d caracteres", 1);
-        fclose(parch);
-    }
-
-    fclose(fm);//cierra el file
-
-    /*
-    cant=fwrite ( texto , sizeof ( char ) , longi , parch ); //Se escribe al archivo
-    if (cant<longi)
-    printf("\nError al escribir el archivo");
-    else
-    printf("\nSe escribieron %d caracteres", cant);
-    fclose(parch);
-    */
-
-    return 1;
-}
-
-/** Busca en el archivo la estruct con el nombre pasado como argumento y lo devuelve
- * \param struct Movie* m puntero a struct a ser escrita
- * \return 0:error, 1:OK
- */
-struct Movie* readMovie(char* titulo)
-{
-    FILE* fm;
-    fm=fopen("bin.dat","rb"); //abrimos el archivo en el modo rb(solo lectura)
-
-    if()
-    {
-        printf("Error opening archivo");
-        return NULL;
-    }
-    //Ahora creamos una estructura en forma dinamica donde guardaremos los datos leidos
-    struct Movie* mRet = malloc(sizeof(struct Movie)); //en mRet guardamos el tamaño q representaesa estructura
-    int flagEncontrado = 0;
-
-    //freadfunciona con: puntero donde guardaremos los datos leidos, la cantidad de bytes del bloque q vamos a leer, cantidad de bloques q lee a la vez y el puntero al archivo.
-    while(fread(mRet,sizeof(struct Movie),1,fm) != 0) //mientras se haya leido un bloque dará distinto de cero, entonces entra al while
-    {
-        if(strcmp(titulo, mRet -> titulo) == 0) //pregunta si el campo titulo es igual al la cad de char titulo q recibimos como argumento
+        if (!getStringLetras(requestMessage,input))
         {
-            flagEncontrado = 1; //si se cumple acusa OK
-            break;
+            printf ("%s\n",errorMessage);
+            continue;
         }
+        cleanStdin();
+        break;
     }
-    fclose(fm);
-    if(flagEncontrado)//si encontró el titulo entonces lo retorna
-        return mRet;
-    free(mRet); //si no lo encontró entonces liberamos ese espacio
-    return NULL;
+
 }
 
-///////////////
-/** Inicializa el array
-\param arrayProductos es el array en el cual buscar
-\param arrayLongitud indica el largo del array
-\param value el valor que se asignara a estatus
-*/
-void setStatus(Movie arrayProductos[], int arrayLongitud, int value)
+//funcion que muestra el menu
+void printMenu()
 {
-    int i;
-    for(i=0; i < arrayLongitud; i++)
-    {
-        arrayProductos[i].status = value;
-    }
+    printf("\n                                           +---------------------------+\n");
+    printf("                                           ¦      Menu de opciones     ¦\n");
+    printf("                                           +---------------------------+\n");
+    printf("                                           -----------------------------\n");
+    printf("                                           ¦  1-AGREGAR PELICULA        ¦\n");
+    printf("                                           ¦  2-BORRAR PELICULA         ¦\n");
+    printf("                                           ¦  3-LISTA DE PELICULAS      ¦\n");
+    printf("                                           ¦  4-MODIFICAR PELICULA      ¦\n");
+    printf("                                           ¦  5-BUSCAR PELICULA         ¦\n");
+    printf("                                           ¦  6-GENERAR LINK            ¦\n");
+    printf("                                           ¦  7-SALIR                   ¦\n");
+    printf("                                           -----------------------------\n");
+    printf("                                           ELEGIR NUMERO DE OPERACION: ");
 }
-
-/** Busca el primerlugar vacio en el array
-\param arrayProductos: es el array en el cual buscar
-\param arraylongitud: indica el largo del array
-\return Si no hay lugares libres: (-1) y si lo hay indica la posicion del mismo:(i)
-*/
-int findEmptyPlace(Movie arrayProductos[], int arrayLongitud)
-{
-    int i;
-    for(i=0; i < arrayLongitud; i++)
-    {
-        if(arrayProductos[i].status == 0)
-        {
-            return i;
-        }
-    }
-}
-
-/** Busca la primer coincidencia de un codigo
-\param arrayProductos es el array en el q busca
-\param arrayLongitud indica el largo del array
-\param code es el valor que busca
-\return Si no hya coincidencia: -1, si la hay: i
-*/
-int findProductByCode(Movie arrayProductos[], int arrayLongitud, int code)
-{
-    int i;
-    for(i=0; i < arrayLongitud; i++)
-    {
-        //verifica q coincida el codigo y q el producto esté activo
-        if(arrayProductos[i].code == code && arrayProductos[i].status == 1)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
-
-/** Permite ingrear un texto y devuelve un puntero con la direccion de memoria
-donde estara el texto ingresado.
-\param char* msg. Mensaje a ser impreso
-\return Puntero a cadena de caracteres con texto ingresado.
-Una vez mostrado hay q liberar memoria con free(pName).
-*/
-char* getDinamicStr(char* msg) //recibe puntero cadena de char
-{
-    printf(msg); //imprime el msj q recibimos como argumento
-
-    char* pData = (char*)malloc(sizeof(char)*1024); //luego construye un espacio de mem de 1k para usar en el scanf
-
-    scanf("%1023s", pData); //el ingreso deberá ser inferior a 1023 letras
-
-    int len = strlen(pData); //ahora veremos cuantas letras hay en ese ingreso
-
-    pData = (char*)realloc(pData, sizeof(char)*(len+1)); //una vez q tenemos el espacio hacemos realloc para achicar el espacio de mem reservada. Entonces devolverá el espacio justo
-
-    return pData; //retorna el dato
-}
-
-//
