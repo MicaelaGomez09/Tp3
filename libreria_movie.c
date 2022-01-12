@@ -120,6 +120,7 @@ void cargar()
         exit(1);
     Movie peli;
 
+
     printf("Ingrese el codigo del producto:");
     scanf("%i",&peli.codigo);
     fflush(stdin);
@@ -148,6 +149,9 @@ void cargar()
     fwrite(&peli, sizeof(Movie), 1, arch);
     fclose(arch);
 
+    peli.estado=1;
+    printf("estado : %d", peli.estado);
+
     printf("PELICULA GUARDADA CON EXITO");
 }
 
@@ -167,26 +171,19 @@ FILE *arch;
     {
         if (cod==peli.codigo)
         {
-            //error
            printf("%i %s %0.2f\n", peli.codigo, peli.titulo, peli.duracion);
-            strcpy(peli.titulo,"vacio");
-            strcpy(peli.genero,"vacio");
-            peli.duracion=0;
-            strcpy(peli.descripcion,"vacio");
-            peli.puntaje=0;
-            strcpy(peli.estado,"vacio");
 
-           int pos=ftell(arch)-sizeof(Movie);
-           fseek(arch,pos,SEEK_SET);
-           fwrite(&peli, sizeof(Movie), 1, arch);
-           printf("Se modifico el titulo para dicha pelicula.\n");
+           peli.estado=0;
+           peli.duracion=0;
+           printf("estado: %d", peli.estado);
+           printf("duracion: %0.2f", peli.duracion);
            existe=1;
            break;
         }
         fread(&peli, sizeof(Movie), 1, arch);
     }
     if (existe==0)
-        printf("No existe una pelicula con dicho codigo3\n");
+        printf("No existe una pelicula con dicho titulo\n");
     fclose(arch);
     continuar();
 
@@ -202,7 +199,7 @@ void listado()
     fread(&peli, sizeof(Movie), 1, arch);
     while(!feof(arch))
     {
-        printf("%d %s %s %0.2f %s %0.2f\n",peli.codigo, peli.titulo, peli.genero, peli.duracion, peli.descripcion, peli.puntaje);
+        printf("%d %s %s %0.2f %s %0.2f %d \n",peli.codigo, peli.titulo, peli.genero, peli.duracion, peli.descripcion, peli.puntaje, peli.estado);
         fread(&peli, sizeof(Movie), 1, arch);
     }
     fclose(arch);
