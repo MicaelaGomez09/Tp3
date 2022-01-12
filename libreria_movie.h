@@ -1,22 +1,25 @@
+#ifndef MOVIE_H_INCLUDED
+#define MOVIE_H_INCLUDED
+
+typedef struct {
+
+    int codigo;
+    char titulo[30];
+    char genero[30];
+    float duracion;
+    char descripcion[280];
+    float puntaje;
+    char linkImagen[50];
+    int estado; /* Active (1) Inactivo(0) */
+}Movie;
+
+void continuar();
+void crearArchivo();
+void cargar();
+void listado();
+void consulta();
+void modificacion();
 void printMenu();
-int getInt();
-float getFloat();
-char getChar();
 
-char getNumeroAleatorio(int desde , int hasta, int iniciar);
 
-int esNumerico(char *str) ;
-int esTelefono(char *str);
-int esAlfaNumerico(char *str);
-int esSoloLetras(char *str);
-int esNumericoFlotante(char str[]);
-
-void getString(char mensaje[],char input[]);
-int getStringLetras(char mensaje[],char input[]);
-int getStringNumeros(char mensaje[],char input[]);
-int getStringNumerosFlotantes(char mensaje[],char input[]);
-
-int getValidInt(char requestMessage[],char errorMessage[], int lowLimit, int hiLimit);
-void getValidString(char requestMessage[],char errorMessage[], char input[]);
-
-void cleanStdin(void);
+#endif // MOVIE_H_INCLUDED
