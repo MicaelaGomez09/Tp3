@@ -1,76 +1,73 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+#include "movie.h"
+#define ACTIVO 1
+#define BORRADO 0
 
-
-/**
- * \brief Solicita un número al usuario y devuelve el resultado
- * \param mensaje Es el mensaje a ser mostrado
- * \return El número ingresado por el usuario
- *
- */
-float getFloat(char* mensaje)
+void getString(char mensaje[], char input[])
 {
-    float auxiliar;
-    printf("%s",mensaje);
-    scanf("%f",&auxiliar);
-    return auxiliar;
+  printf("%s", mensaje);
+  scanf("%s", input);
 }
-
-
-/**
- * \brief Solicita un número al usuario y devuelve el resultado
- * \param mensaje Es el mensaje a ser mostrado
- * \return El número ingresado por el usuario
- *
- */
-int getInt(char* mensaje)
+int esSoloLetras(char str[])
 {
-    int auxiliar;
-    printf("%s",mensaje);
-    scanf("%d",&auxiliar);
-    return auxiliar;
+    int i=0;
+    while(str[i] != '\0')
+    {
+        if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
+            return 0;
+        i++;
+    }
+    return 1;
 }
-
-
-/**
- * \brief Solicita un caracter al usuario y devuelve el resultado
- * \param mensaje Es el mensaje a ser mostrado
- * \return El caracter ingresado por el usuario
- *
- */
-char getChar(char* mensaje)
+int getSoloLetras(char mensaje[], char input[])
 {
-    char auxiliar;
-    printf("%s",mensaje);
-    fflush(stdin);
-    scanf("%c",&auxiliar);
-    return auxiliar;
+  char datoIngresado[256];
+  getString(mensaje, datoIngresado);//(placeholder, &duardado_en) /**/
+  if(esSoloLetras(datoIngresado)) //si lo que ingresó el usuario son solo letras
+  {
+    strcpy(input, datoIngresado);//copiamos el dato ingresado en 'inpu'
+    return 1;
+  }
+  return 0;
 }
-/**
- * \brief Genera un número aleatorio
- * \param desde Número aleatorio mínimo
- * \param hasta Número aleatorio máximo
- * \param iniciar Indica si se trata del primer número solicitado 1 indica que si
- * \return retorna el número aleatorio generado
- *
- */
-char getNumeroAleatorio(int desde , int hasta, int iniciar)
+int getInt(char mensaje[])
 {
-    if(iniciar)
-        srand (time(NULL));
-    return desde + (rand() % (hasta + 1 - desde)) ;
+    int aux; //variable int que contendr� el valor de mensaje
+    printf("%s", mensaje);//solicita un string
+    scanf("%d", &aux);//toma el string y lo guarda tido %d en la variable
+    return aux;// retorna la variable con el dato guardado
 }
-
-
-/**
- * \brief Verifica si el valor recibido es numérico aceptando flotantes
- * \param str Array con la cadena a ser analizada
- * \return 1 si es númerico y 0 si no lo es
- *
- */
-
+float getFloat(char mensaje[])
+{
+    float aux; //variable flotante que contendr� el valor de mensaje
+    printf("%s", mensaje);//solicita un string
+    scanf("%f", &aux);//toma el string y lo guarda en la variable
+    return aux;// retorna la variable con el dato guardado
+}
+int getSoloNumeros(char mensaje[], char input[])
+{
+    char aux[256];
+    getString(mensaje, aux);
+    if(esNumerico(aux))
+    {
+        strcpy(input, aux);
+        return 1;
+    }
+    return 0;
+}
+int esNumerico(char str[])
+{
+    int i = 0;
+    while(str[i] != '\0')
+    {
+        if(str[i] < '0' || str[i] > '9')
+            return 0;
+        i++;
+    }
+    return 1;
+}
 int esNumericoFlotante(char str[])
 {
    int i=0;
@@ -90,228 +87,189 @@ int esNumericoFlotante(char str[])
    }
    return 1;
 }
-
-/**
- * \brief Verifica si el valor recibido es numérico
- * \param str Array con la cadena a ser analizada
- * \return 1 si es númerico y 0 si no lo es
- *
- */
-
-int esNumerico(char str[])
+int getChar(char mensaje[])
 {
-   int i=0;
-   while(str[i] != '\0')
-   {
-       if(str[i] < '0' || str[i] > '9')
-           return 0;
-       i++;
-   }
-   return 1;
-}
-
-/**
- * \brief Verifica si el valor recibido contiene solo letras
- * \param str Array con la cadena a ser analizada
- * \return 1 si contiene solo ' ' y letras y 0 si no lo es
- *
- */
-int esSoloLetras(char str[])
-{
-   int i=0;
-   while(str[i] != '\0')
-   {
-       if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z'))
-           return 0;
-       i++;
-   }
-   return 1;
+    float aux; //variable flotante que contendr� el valor de mensaje
+    printf("%s", mensaje);//solicita un string
+    fflush(stdin); // el estandar input puede contener algun residuo
+    scanf("%c", &aux);//toma el string y lo guarda en la variable
+    return aux;// retorna la variable con el dato guardado
 }
 
 
-/**
- * \brief Verifica si el valor recibido contiene solo letras y números
- * \param str Array con la cadena a ser analizada
- * \return 1 si contiene solo espacio o letras y números, y 0 si no lo es
- *
- */
-int esAlfaNumerico(char str[])
+void continuar()
 {
-   int i=0;
-   while(str[i] != '\0')
-   {
-       if((str[i] != ' ') && (str[i] < 'a' || str[i] > 'z') && (str[i] < 'A' || str[i] > 'Z') && (str[i] < '0' || str[i] > '9'))
-           return 0;
-       i++;
-   }
-   return 1;
+    printf("Presione una tecla para continuar\n\n");
+    getch();
 }
 
-
-/**
- * \brief Verifica si el valor recibido contiene solo números, + y -
- * \param str Array con la cadena a ser analizada
- * \return 1 si contiene solo numeros, espacios y un guion.
- *
- */
-int esTelefono(char str[])
+void crearArchivo()
 {
-   int i=0;
-   int contadorGuiones=0;
-   while(str[i] != '\0')
-   {
-       if((str[i] != ' ') && (str[i] != '-') && (str[i] < '0' || str[i] > '9'))
-           return 0;
-       if(str[i] == '-')
-            contadorGuiones++;
-       i++;
-   }
-   if(contadorGuiones==1) // debe tener un guion
-        return 1;
-
-    return 0;
+    FILE *arch;
+    arch=fopen("peliculas.dat","wb");
+    if (arch==NULL)
+        exit(1);
+    fclose(arch);
 }
 
-/**
- * \brief Solicita un texto al usuario y lo devuelve
- * \param mensaje Es el mensaje a ser mostrado
- * \param input Array donde se cargará el texto ingresado
- * \return void
- */
-void getString(char mensaje[],char input[])
+void cargar()
 {
-    printf("%s",mensaje);
-    scanf ("%s", input);
-}
+    FILE *arch;
+    arch=fopen("peliculas.dat","a+b");
+    if (arch==NULL)
+        exit(1);
+    Movie peli;
 
-/**
- * \brief Solicita un texto al usuario y lo devuelve
- * \param mensaje Es el mensaje a ser mostrado
- * \param input Array donde se cargará el texto ingresado
- * \return 1 si el texto contiene solo letras
- */
-int getStringLetras(char mensaje[],char input[])
-{
-    char aux[256];
-    getString(mensaje,aux);
-    if(esSoloLetras(aux))
+    printf("Ingrese el codigo del producto:");
+    scanf("%i",&peli.codigo);
+    fflush(stdin);
+
+    printf("Ingrese el titulo de la pelicula: ");
+    scanf("%s",&peli.titulo);
+    fflush(stdin);
+
+    if(!getSoloLetras("Ingrese un genero: ", &peli.genero))
     {
-        strcpy(input,aux);
-        return 1;
+        printf("El genero debe contener solo letras\n");
+        return 0;
     }
-    return 0;
-}
 
-/**
- * \brief Solicita un texto numérico al usuario y lo devuelve
- * \param mensaje Es el mensaje a ser mostrado
- * \param input Array donde se cargará el texto ingresado
- * \return 1 si el texto contiene solo números
- */
-int getStringNumeros(char mensaje[],char input[])
-{
-    char aux[256];
-    getString(mensaje,aux);
-    if(esNumerico(aux))
+    printf("Ingrese duracion: ");
+    scanf("%f", &peli.duracion);
+
+    if(!getSoloLetras("Ingrese una descripcion: ", &peli.descripcion))
     {
-        strcpy(input,aux);
-        return 1;
+        printf("La descripcion debe contener solo letras\n");
+        return 0;
     }
-    return 0;
+
+    printf("Ingrese puntuaje: ");
+    scanf("%f",&peli.puntaje);
+    fwrite(&peli, sizeof(Movie), 1, arch);
+    fclose(arch);
+
+    printf("PELICULA GUARDADA CON EXITO");
 }
 
-
-/**
- * \brief Solicita un texto numérico al usuario y lo devuelve (acepta flotantes)
- * \param mensaje Es el mensaje a ser mostrado
- * \param input Array donde se cargará el texto ingresado
- * \return 1 si el texto contiene solo números
- */
-int getStringNumerosFlotantes(char mensaje[],char input[])
+void borrado()
 {
-    char aux[256];
-    getString(mensaje,aux);
-    if(esNumericoFlotante(aux))
+FILE *arch;
+    arch=fopen("peliculas.dat","r+b");
+    if (arch==NULL)
+        exit(1);
+    printf("Ingrese el codigo de pelicula a borrar:");
+    int cod;
+    scanf("%d", &cod);
+    Movie peli;
+    int existe=0;
+    fread(&peli, sizeof(Movie), 1, arch);
+    while(!feof(arch))
     {
-        strcpy(input,aux);
-        return 1;
-    }
-    return 0;
-}
-
-
-/**
- * \brief Solicita un numero entero al usuario y lo valida
- * \param requestMessage Es el mensaje a ser mostrado para solicitar el dato
- * \param requestMessage Es el mensaje a ser mostrado en caso de error
- * \return El número ingresado por el usuario
- *
- */
-int getValidInt(char requestMessage[],char errorMessage[], int lowLimit, int hiLimit)
-{
-    char auxStr[256];
-    int auxInt;
-    while(1)
-    {
-        if (!getStringNumeros(requestMessage,auxStr))
+        if (cod==peli.codigo)
         {
-            printf ("%s\n",errorMessage);
-            continue;
+            //error
+           printf("%i %s %0.2f\n", peli.codigo, peli.titulo, peli.duracion);
+            strcpy(peli.titulo,"vacio");
+            strcpy(peli.genero,"vacio");
+            peli.duracion=0;
+            strcpy(peli.descripcion,"vacio");
+            peli.puntaje=0;
+            strcpy(peli.estado,"vacio");
 
+           int pos=ftell(arch)-sizeof(Movie);
+           fseek(arch,pos,SEEK_SET);
+           fwrite(&peli, sizeof(Movie), 1, arch);
+           printf("Se modifico el titulo para dicha pelicula.\n");
+           existe=1;
+           break;
         }
-        auxInt = atoi(auxStr);
-        if(auxInt < lowLimit || auxInt > hiLimit)
-        {
-            printf ("El numero del debe ser mayor a %d y menor a %d\n",lowLimit,hiLimit);
-            continue;
-
-        }
-        return auxInt;
-
+        fread(&peli, sizeof(Movie), 1, arch);
     }
-
+    if (existe==0)
+        printf("No existe una pelicula con dicho codigo3\n");
+    fclose(arch);
+    continuar();
 
 }
 
-/**
- * \brief Limpia el stdin, similar a fflush
- * \param -
- * \return -
- *
- */
-void cleanStdin(void)
+void listado()
 {
-    int c;
-    do {
-        c = getchar();
-    } while (c != '\n' && c != EOF);
-}
-
-/**
- * \brief Solicita un string
- * \param requestMessage Es el mensaje a ser mostrado para solicitar el dato
- * \param requestMessage Es el mensaje a ser mostrado en caso de error
- * \param input Array donde se cargará el texto ingresado
- * \return -
- *
- */
-void getValidString(char requestMessage[],char errorMessage[], char input[])
-{
-
-    while(1)
+    FILE *arch;
+    arch=fopen("peliculas.dat","rb");
+    if (arch==NULL)
+        exit(1);
+    Movie peli;
+    fread(&peli, sizeof(Movie), 1, arch);
+    while(!feof(arch))
     {
-        if (!getStringLetras(requestMessage,input))
-        {
-            printf ("%s\n",errorMessage);
-            continue;
-        }
-        cleanStdin();
-        break;
+        printf("%d %s %s %0.2f %s %0.2f\n",peli.codigo, peli.titulo, peli.genero, peli.duracion, peli.descripcion, peli.puntaje);
+        fread(&peli, sizeof(Movie), 1, arch);
     }
-
+    fclose(arch);
+    continuar();
 }
 
-//funcion que muestra el menu
+void consulta()
+{
+    FILE *arch;
+    arch=fopen("productos.dat","rb");
+    if (arch==NULL)
+        exit(1);
+    printf("Ingrese el titulo de pelicula a consultar:");
+    char title;
+    scanf("%s", &title);
+    Movie peli;
+    int existe=0;
+    fread(&peli, sizeof(Movie), 1, arch);
+    while(!feof(arch))
+    {
+        if (title == peli.titulo)
+        {
+            printf("%d %s %s %0.2f %s %0.2f\n",peli.codigo, peli.titulo, peli.genero, peli.duracion, peli.descripcion, peli.puntaje);
+            existe=1;
+            break;
+        }
+        fread(&peli, sizeof(Movie), 1, arch);
+    }
+    if (existe==0)
+        printf("No existe una pelicula con dicho titulo\n");
+    fclose(arch);
+    continuar();
+}
+
+void modificacion()
+{
+    FILE *arch;
+    arch=fopen("peliculas.dat","r+b");
+    if (arch==NULL)
+        exit(1);
+    printf("Ingrese el codigo de pelicula a modificar:");
+    int cod;
+    scanf("%d", &cod);
+    Movie peli;
+    int existe=0;
+    fread(&peli, sizeof(Movie), 1, arch);
+    while(!feof(arch))
+    {
+        if (cod==peli.codigo)
+        {
+           printf("%i %s %0.2f\n", peli.codigo, peli.titulo, peli.duracion);
+           printf("Ingrese nuevo titulo:");
+           scanf("%s",&peli.titulo);
+           int pos=ftell(arch)-sizeof(Movie);
+           fseek(arch,pos,SEEK_SET);
+           fwrite(&peli, sizeof(Movie), 1, arch);
+           printf("Se modifico el titulo para dicha pelicula.\n");
+           existe=1;
+           break;
+        }
+        fread(&peli, sizeof(Movie), 1, arch);
+    }
+    if (existe==0)
+        printf("No existe una pelicula con dicho titulo\n");
+    fclose(arch);
+    continuar();
+}
 void printMenu()
 {
     printf("\n                                           +---------------------------+\n");
