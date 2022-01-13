@@ -121,7 +121,7 @@ void cargar()
     Movie peli;
 
 
-    printf("Ingrese el codigo del producto:");
+    printf("Ingrese el codigo de la pelicula:");
     scanf("%i",&peli.codigo);
     fflush(stdin);
 
